@@ -188,15 +188,6 @@ if selected == "Hypo-Thyroid Prediction":
 
     thyroid_diagnosis = ''
     if st.button("Thyroid Test Result"):
-    input_features = [age, sex, on_thyroxine, tsh, t3_measured, t3, tt4, t4u, fti, TBG_measured]
-    input_features = [float(x) if x not in [None, ''] else 0.0 for x in input_features]
-
-    expected_features = thyroid_model.n_features_in_
-
-    if len(input_features) != expected_features:
-        st.error(f"Feature mismatch! Model expects {expected_features} features, but got {len(input_features)}.")
-    else:
-        thyroid_prediction = thyroid_model.predict([input_features])
+        thyroid_prediction = thyroid_model.predict([[age, sex, on_thyroxine, tsh, t3_measured, t3, tt4, t4u, fti, TBG_measured]])
         thyroid_diagnosis = "The person has hypo-thyroid disease" if thyroid_prediction[0] == 1 else "The person does not have hypo-thyroid disease"
         st.success(thyroid_diagnosis)
-

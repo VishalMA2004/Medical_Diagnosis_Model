@@ -164,4 +164,14 @@ if selected == "Hypo-Thyroid Prediction":
     on_thyroxine = display_input('On Thyroxine (1 = Yes; 0 = No)', 'Enter if the person is on thyroxine', 'on_thyroxine', 'number')
     tsh = display_input('TSH Level', 'Enter TSH level', 'tsh', 'number')
     t3_measured = display_input('T3 Measured (1 = Yes; 0 = No)', 'Enter if T3 was measured', 't3_measured', 'number')
-    t3 = display_input('T3 Level', 'Enter T3 level', 't3',
+    t3 = display_input('T3 Level', 'Enter T3 level', 't3', 'number')
+    tt4 = display_input('TT4 Level', 'Enter TT4 level', 'tt4', 'number')
+    t4u = display_input('T4U Level', 'Enter T4U level', 't4u', 'number')
+    fti = display_input('FTI Level', 'Enter FTI level', 'fti', 'number')
+    TBG_measured = display_input('TBG Measured (1 = Yes; 0 = No)', 'Enter if TBG was measured', 'TBG_measured', 'number')
+
+    thyroid_diagnosis = ''
+    if st.button("Thyroid Test Result"):
+        thyroid_prediction = thyroid_model.predict([[age, sex, on_thyroxine, tsh, t3_measured, t3, tt4, t4u, fti, TBG_measured]])
+        thyroid_diagnosis = "The person has hypo-thyroid disease" if thyroid_prediction[0] == 1 else "The person does not have hypo-thyroid disease"
+        st.success(thyroid_diagnosis)

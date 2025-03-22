@@ -42,29 +42,11 @@ background-color: rgba(0, 0, 0, 0.7);
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Load the saved models
-models = {
-    'diabetes': pickle.load(open('diabetes_prediction_model.pkl', 'rb')),
-    'heart_disease': pickle.load(open('heart_disease_model.pkl', 'rb')),
-    'parkinsons': pickle.load(open('parkinsons_model.pkl', 'rb')),
-    'lung_cancer': pickle.load(open('Lung_cancer_model.pkl', 'rb')),
-    'thyroid': pickle.load(open('thyroid_model.pkl', 'rb'))
-}
-
-# Create a dropdown menu for disease prediction
-selected = st.selectbox(
-    'Select a Disease to Predict',
-    ['Diabetes Prediction',
-     'Heart Disease Prediction',
-     'Parkinsons Prediction',
-     'Lung Cancer Prediction',
-     'Hypo-Thyroid Prediction']
-)
-
-def display_input(label, tooltip, key, type="text"):
-    if type == "text":
-        return st.text_input(label, key=key, help=tooltip)
-    elif type == "number":
-        return st.number_input(label, key=key, help=tooltip, step=1)
+diabetes_model = pickle.load(open('diabetes_prediction_model.pkl', 'rb'))
+heart_disease_model = pickle.load(open('heart_disease_model.pkl', 'rb'))
+parkinsons_model = pickle.load(open('parkinsons_model.pkl', 'rb'))
+lung_cancer_model = pickle.load(open('Lung_cancer_model.pkl', 'rb'))
+thyroid_model = pickle.load(open('thyroid_model.pkl', 'rb'))
 
 # Diabetes Prediction Page
 if selected == 'Diabetes Prediction':
@@ -82,7 +64,7 @@ if selected == 'Diabetes Prediction':
 
     diab_diagnosis = ''
     if st.button('Diabetes Test Result'):
-        diab_prediction = models['diabetes'].predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
+        diab_prediction = diabetes_model.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
         diab_diagnosis = 'The person is diabetic' if diab_prediction[0] == 1 else 'The person is not diabetic'
         st.success(diab_diagnosis)
 
@@ -107,7 +89,7 @@ if selected == 'Heart Disease Prediction':
 
     heart_diagnosis = ''
     if st.button('Heart Disease Test Result'):
-        heart_prediction = models['heart_disease'].predict([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
+        heart_prediction = heart_disease_model.predict([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
         heart_diagnosis = 'The person has heart disease' if heart_prediction[0] == 1 else 'The person does not have heart disease'
         st.success(heart_diagnosis)
 
@@ -141,7 +123,7 @@ if selected == "Parkinsons Prediction":
 
     parkinsons_diagnosis = ''
     if st.button("Parkinson's Test Result"):
-        parkinsons_prediction = models['parkinsons'].predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
+        parkinsons_prediction = parkinsons_model.predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
         parkinsons_diagnosis = "The person has Parkinson's disease" if parkinsons_prediction[0] == 1 else "The person does not have Parkinson's disease"
         st.success(parkinsons_diagnosis)
 
@@ -168,7 +150,7 @@ if selected == "Lung Cancer Prediction":
 
     lungs_diagnosis = ''
     if st.button("Lung Cancer Test Result"):
-        lungs_prediction = models['lung_cancer'].predict([[GENDER, AGE, SMOKING, YELLOW_FINGERS, ANXIETY, PEER_PRESSURE, CHRONIC_DISEASE, FATIGUE, ALLERGY, WHEEZING, ALCOHOL_CONSUMING, COUGHING, SHORTNESS_OF_BREATH, SWALLOWING_DIFFICULTY, CHEST_PAIN]])
+        lungs_prediction = lung_cancer_model.predict([[GENDER, AGE, SMOKING, YELLOW_FINGERS, ANXIETY, PEER_PRESSURE, CHRONIC_DISEASE, FATIGUE, ALLERGY, WHEEZING, ALCOHOL_CONSUMING, COUGHING, SHORTNESS_OF_BREATH, SWALLOWING_DIFFICULTY, CHEST_PAIN]])
         lungs_diagnosis = "The person has lung cancer disease" if lungs_prediction[0] == 1 else "The person does not have lung cancer disease"
         st.success(lungs_diagnosis)
 
@@ -182,11 +164,4 @@ if selected == "Hypo-Thyroid Prediction":
     on_thyroxine = display_input('On Thyroxine (1 = Yes; 0 = No)', 'Enter if the person is on thyroxine', 'on_thyroxine', 'number')
     tsh = display_input('TSH Level', 'Enter TSH level', 'tsh', 'number')
     t3_measured = display_input('T3 Measured (1 = Yes; 0 = No)', 'Enter if T3 was measured', 't3_measured', 'number')
-    t3 = display_input('T3 Level', 'Enter T3 level', 't3', 'number')
-    tt4 = display_input('TT4 Level', 'Enter TT4 level', 'tt4', 'number')
-
-    thyroid_diagnosis = ''
-    if st.button("Thyroid Test Result"):
-        thyroid_prediction = models['thyroid'].predict([[age, sex, on_thyroxine, tsh, t3_measured, t3, tt4]])
-        thyroid_diagnosis = "The person has Hypo-Thyroid disease" if thyroid_prediction[0] == 1 else "The person does not have Hypo-Thyroid disease"
-        st.success(thyroid_diagnosis)
+    t3 = display_input('T3 Level', 'Enter T3 level', 't3',

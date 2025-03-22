@@ -57,6 +57,13 @@ selected = st.selectbox(
      'Hypo-Thyroid Prediction']
 )
 
+def display_input(label, tooltip, key, type="text"):
+    if type == "text":
+        return st.text_input(label, key=key, help=tooltip)
+    elif type == "number":
+        return st.number_input(label, key=key, help=tooltip, step=1)
+
+
 # Diabetes Prediction Page
 if selected == 'Diabetes Prediction':
     st.title('Diabetes')

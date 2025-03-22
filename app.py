@@ -48,6 +48,15 @@ parkinsons_model = pickle.load(open('parkinsons_model.pkl', 'rb'))
 lung_cancer_model = pickle.load(open('Lung_cancer_model.pkl', 'rb'))
 thyroid_model = pickle.load(open('thyroid_model.pkl', 'rb'))
 
+selected = st.selectbox(
+    'Select a Disease to Predict',
+    ['Diabetes Prediction',
+     'Heart Disease Prediction',
+     'Parkinsons Prediction',
+     'Lung Cancer Prediction',
+     'Hypo-Thyroid Prediction']
+)
+
 # Diabetes Prediction Page
 if selected == 'Diabetes Prediction':
     st.title('Diabetes')

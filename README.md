@@ -75,7 +75,7 @@ This project is licensed under the **MIT License**.
 ## **Contact**
 For queries, feel free to reach out:
 - **GitHub**: [VishalMA2004](https://github.com/VishalMA2004)
-- **Email**: [Your Email Here] (Replace with actual contact info)
+- **Email**: [vishalmanickasundaram@gmail.com] (vishalmanickasundaram@gmail.com)
 
 ---
 **Star ⭐ this repository if you found it useful!**
